@@ -17,6 +17,8 @@ export const admin_login = createAsyncThunk(
         }
     }
 )
+
+
 export const seller_login = createAsyncThunk(
     'auth/seller_login',
     async(info,{rejectWithValue, fulfillWithValue}) => {
@@ -36,9 +38,9 @@ export const seller_login = createAsyncThunk(
 export const get_user_info = createAsyncThunk(
     'auth/get_user_info',
     async(_ ,{rejectWithValue, fulfillWithValue}) => {
-
+          
         try {
-            const {data} = await api.get('/get-info',{withCredentials: true})
+            const {data} = await api.get('/get-user',{withCredentials: true})
             // console.log(data)            
             return fulfillWithValue(data)
         } catch (error) {
@@ -75,13 +77,13 @@ export const seller_register = createAsyncThunk(
            } else {
                 return decodeToken.role
            }
-
+            
         } else {
             return ''
         }
     }
 
-
+ 
 export const authReducer = createSlice({
     name: 'auth',
     initialState:{
@@ -97,6 +99,7 @@ export const authReducer = createSlice({
         messageClear : (state,_) => {
             state.errorMessage = ""
         }
+
     },
     extraReducers: (builder) => {
         builder
@@ -148,6 +151,7 @@ export const authReducer = createSlice({
         })
 
     }
+
 })
 export const {messageClear} = authReducer.actions
 export default authReducer.reducer
